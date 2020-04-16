@@ -2,6 +2,19 @@ import React, { Component } from 'react';
 
 import { Button } from 'antd'
 
+const testHOC = (WrappedComponent) => {
+    return class HOCComponrnt extends Component {
+        render() {
+            return (
+                <>
+                    <WrappedComponent />
+                    <div>这是高阶组件</div>
+                </>
+            )
+        }
+    }
+}
+
 class App extends Component {
     render() {
         return (
@@ -13,4 +26,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default testHOC(App);
