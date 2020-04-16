@@ -7,7 +7,7 @@ class App extends Component {
         return (
             <div>
                 app
-                <Button>测试按钮</Button>
+                <Button type="primary">测试按钮</Button>
             </div>
         );
     }
