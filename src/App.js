@@ -15,6 +15,23 @@ const testHOC = (WrappedComponent) => {
     }
 }
 
+
+// class App extends Component {
+//     render() {
+//         return (
+//             <div>
+//                 app
+//                 <Button type="primary">测试按钮</Button>
+//             </div>
+//         );
+//     }
+// }
+
+// export default testHOC(App);
+
+
+@testHOC//装饰器模式写法
+
 class App extends Component {
     render() {
         return (
@@ -26,4 +43,4 @@ class App extends Component {
     }
 }
 
-export default testHOC(App);
+export default App;

@@ -7,7 +7,8 @@
 const {
     override,
     addLessLoader,
-    fixBabelImports
+    fixBabelImports,
+    addDecoratorsLegacy,//配置装饰器模式
 }  = require('customize-cra')
 
 const modifyVars = require('./lessVars')
@@ -17,6 +18,7 @@ module.exports = override(
         javascriptEnabled: true,
         modifyVars,
     }),
+    addDecoratorsLegacy(),
     fixBabelImports('import', {
         libraryName: 'antd',
         libraryDirectory: 'es',
