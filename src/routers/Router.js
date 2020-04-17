@@ -17,15 +17,26 @@ export const mainRouter = [{
 
 export const adminRouter = [{
     pathname: '/admin/dashboard',
-    components: DashBoard
-}, {
-    pathname: '/admin/settings',
-    components: Settings
+    components: DashBoard,
+    title: '仪表盘',
+    isNav: true
 }, {
     pathname: '/admin/artical',
     components: Artical,
-    exact: true
+    title: '文章管理',
+    isNav: true,
+    exact: true,
+    // children: {
+    //     ...//二级菜单
+    // }
 }, {
     pathname: '/admin/artical/edit/:id',
-    components: ArticalEdit
+    components: ArticalEdit,
+    title: '文章编辑',
+    isNav: true
+}, {
+    pathname: '/admin/settings',
+    components: Settings,
+    title: '设置',
+    isNav: true
 }]

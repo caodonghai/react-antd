@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-
 import { adminRouter } from './routers/Router'
 import { Route, Switch, Redirect } from 'react-router-dom';
+
+import { Frame } from './components'
 
 // const testHOC = (WrappedComponent) => {
 //     return class HOCComponrnt extends Component {
@@ -50,11 +51,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 // }
 
 
+const menus = adminRouter.filter(route => route.isNav === true );
+
 class App extends Component {
     render() {
         return (
-            <div>
-                这里是公共部分（导航、顶部。。。。）
+            <Frame menus={menus}>
                 <Switch>
                     {
                         adminRouter.map(route => {
@@ -73,7 +75,7 @@ class App extends Component {
                     <Redirect to={adminRouter[0].pathname} from="/admin" exact />
                     <Redirect to="/404" />
                 </Switch>
-            </div>
+            </Frame>
         );
     }
 }
