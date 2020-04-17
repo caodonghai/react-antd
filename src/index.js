@@ -7,7 +7,7 @@ import App from './App'
 
 import { mainRouter } from './routers/Router'
 
-// import './index.less'//用于测试less和less-loader
+import './index.less'//用于测试less和less-loader
 
 render(
     <Router>
