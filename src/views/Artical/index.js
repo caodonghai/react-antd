@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Card, Table, Tag } from 'antd'
 
 import { getArticals } from '../../requests'
+import { config } from 'rxjs';
 
 const titleDisplayMap =  {
     id: 'id',
@@ -10,7 +11,6 @@ const titleDisplayMap =  {
     auth: '作者',
     amount: '阅读量',
     creatAt: '创建时间'
-
 }
 
 class Artical extends Component {
@@ -20,11 +20,12 @@ class Artical extends Component {
             dataSource: [],
             columns: [],
             total: 0,
+            isLoading: false
         }
     }
 
     creatClumns = (columnKeys) => {
-        return columnKeys.map(item => {
+        const clumns = columnKeys.map(item => {
             if (item === 'creatAt') {
                 return {
                     title: titleDisplayMap[item],
@@ -52,9 +53,30 @@ class Artical extends Component {
                 }
             }
         })
+        clumns.push({
+            title: '操作',
+            key: 'action',
+            render: (text,record) => {
+                console.log(record)
+                return(
+                    <>
+                        <Tag color="#2db7f5" style={{cursor: "pointer",padding: '5px 10px',margin: 'auto 10px'}}>
+                            编辑
+                        </Tag>
+                        <Tag color="#108ee9" style={{cursor: "pointer",padding: '4px 10px',margin: 'auto 10px'}}>
+                            修改
+                        </Tag>
+                    </>
+                )
+            }
+        })
+        return clumns
     }
 
     getData = () => {
+        this.setState({
+            isLoading: true
+        })
         getArticals()
             .then(resp => {
                 const columnKeys = Object.keys(resp.list[0]);
@@ -69,7 +91,16 @@ class Artical extends Component {
                 this.setState({
                     dataSource: resp.list,
                     total: resp.total,
-                    columns
+                    columns,
+                })
+            })
+            .catch(err => {
+                //处理错误
+                console.log(err)
+            })
+            .finally(() => {
+                this.setState({
+                    isLoading: false
                 })
             })
     }
@@ -84,7 +115,7 @@ class Artical extends Component {
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
                     rowKey={(record) => record.id}
-                    loading={false}
+                    loading={this.state.isLoading}
                     pagination={{
                         total:this.state.total,
                         pageSize:50,
