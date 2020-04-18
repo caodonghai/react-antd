@@ -33,7 +33,7 @@ class Frame extends Component {
                         {this.props.menus.map(item => {
                             return(
                                 <Menu.Item
-                                key={item.pathname}
+                                    key={item.pathname}
                                 >
                                     {item.icon}
                                     {item.title}
