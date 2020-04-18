@@ -63,17 +63,29 @@ class Artical extends Component {
             title: '操作',
             key: 'action',
             align: 'center',
+            width: '15%',
             render: (text,record) => {
                 return(
                     <>
-                        <Tag color="#2db7f5" style={{cursor: "pointer",padding: '5px 10px',margin: 'auto 10px'}}>
+                        <Tag color="#2db7f5" style={{cursor: "pointer",padding: '5px 20px',marginRight: '10px'}}>
                             编辑
                         </Tag>
-                        <Tag color="#108ee9" style={{cursor: "pointer",padding: '4px 10px',margin: 'auto 10px'}}>
-                            修改
+                        <Tag color="red" style={{cursor: "pointer",padding: '4px 20px'}}>
+                            删除
                         </Tag>
                     </>
                 )
+            }
+        })
+
+        //添加表格序号
+        clumns.unshift({
+            title: '序号',
+            key: 'index',
+            align: 'center',
+            width: '5%',
+            render: (text,record,index) => {
+                return (this.state.pageNumber - 1) * this.state.pageSize + index + 1
             }
         })
         return clumns
