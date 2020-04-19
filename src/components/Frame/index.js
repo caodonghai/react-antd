@@ -15,6 +15,10 @@ class Frame extends Component {
     }
     
     render() {
+        //处理路由跳转后侧边栏高亮效果消失的问题
+        const selectedKeys = this.props.location.pathname.split('/');
+        selectedKeys.length = 3;
+        
         return (
             <Layout style={{minHeight: '100%'}}>
                 <Header className="header HZ-header">
@@ -26,7 +30,7 @@ class Frame extends Component {
                 <Sider width={200} className="site-layout-background">
                     <Menu
                         mode="inline"
-                        selectedKeys={[this.props.location.pathname]}
+                        selectedKeys={selectedKeys.join('/')}
                         onClick={this.onMenuClick}
                         style={{ height: '100%', borderRight: 0 }}
                     >

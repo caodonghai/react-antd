@@ -3,7 +3,7 @@ import { message } from 'antd'
 const isDev = process.env.NODE_ENV === 'development'//判断是否为生产环境
 
 const service = axios.create({
-    baseURL: isDev ? 'http://rap2.taobao.org:38080' : ''
+    baseURL: isDev ? 'http://rap2.taobao.org:38080/app/mock/251246' : ''
 })
 
 //请求拦截
@@ -26,9 +26,15 @@ service.interceptors.response.use((resp) => {
     }
 })
 
+//获取文章列表
 export const getArticals = (pageSize = 10, pageNumber = 1) => {
-    return service.post('/app/mock/251246/api/v1/articalList', {
+    return service.post('/api/v1/articalList', {
         pageNumber,
         pageSize
     })
+}
+
+//文章删除
+export const deleteArticalItem = (id) => {
+    return service.post(`/api/v1/articalDelete${id}`)
 }

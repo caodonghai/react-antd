@@ -39,11 +39,17 @@ export const adminRouter = [{
     components: ArticalEdit,
     title: '文章编辑',
     icon: <EditOutlined />,
-    isNav: true
+    isNav: false
 }, {
     pathname: '/admin/settings',
     components: Settings,
     title: '设置',
     icon: <SettingOutlined />,
     isNav: true
+// }, {
+//     pathname: '/alibaba/home',
+//     components: Settings,
+//     title: '阿里招聘首页 ',
+//     icon: <SettingOutlined />,
+//     isNav: true
 }]

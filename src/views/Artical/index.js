@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment'
-import { Card, Table, Tag } from 'antd'
+import { Modal, Card, Table, Tag, Typography, Popover, Button, message } from 'antd'
 import XLSX from 'xlsx'//前端实现excel数据导出
-import { getArticals } from '../../requests'
-import { Button } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import { getArticals, deleteArticalItem } from '../../requests'
+import { DownloadOutlined, DeleteTwoTone, SmileTwoTone } from '@ant-design/icons'
+
+const { Text, Title } = Typography
 
 const titleDisplayMap =  {
     id: 'id',
@@ -23,7 +24,11 @@ class Artical extends Component {
             total: 0,
             isLoading: false,
             pageSize: 10,
-            pageNumber: 1
+            pageNumber: 1,
+            isModalvisible: false,
+            isConfimLoading: false,
+            modalTitle: '',
+            ArticalId: '',
         }
     }
 
@@ -47,9 +52,15 @@ class Artical extends Component {
                     align: 'center',
                     render: ( text, record ) => {
                         const { id, amount } = record;
-                        return <Tag key={id} color={amount > 300 ? 'red' : 'geekblue'}>{ record.amount }</Tag>
+                        return (
+                        <Popover
+                            title={<Typography><SmileTwoTone twoToneColor={amount > 300 ? 'red' : 'blue'} />小提示：</Typography>}
+                            content={<Typography>{amount > 300 ? '红色代表阅读数量大于300。' : '蓝色代表阅读数量小于300。'}</Typography>}
+                        >
+                            <Tag key={id} color={amount > 300 ? 'red' : 'geekblue'}>{ record.amount }</Tag>
+                        </Popover>)
                     }
-                } 
+                }//
             } else {
                 return {
                     title: titleDisplayMap[item],
@@ -67,10 +78,10 @@ class Artical extends Component {
             render: (text,record) => {
                 return(
                     <>
-                        <Tag color="#2db7f5" style={{cursor: "pointer",padding: '5px 20px',marginRight: '10px'}}>
+                        <Tag color="#2db7f5" onClick={this.toEdit.bind(this,record)} style={{cursor: "pointer",padding: '5px 20px',marginRight: '10px'}}>
                             编辑
                         </Tag>
-                        <Tag color="red" style={{cursor: "pointer",padding: '4px 20px'}}>
+                        <Tag color="red" onClick={this.showDeleteModal.bind(this, record)} style={{cursor: "pointer",padding: '4px 20px'}}>
                             删除
                         </Tag>
                     </>
@@ -89,6 +100,58 @@ class Artical extends Component {
             }
         })
         return clumns
+    }
+
+    toEdit = (record) => {
+        this.props.history.push({
+            pathname: `/admin/artical/edit/${record.id}`,
+            state: {...record}
+        })
+    }
+
+    showDeleteModal = (record) => {
+        // Modal.confirm({
+        //     title:<Typography level={1}><DeleteTwoTone twoToneColor='#F00' />删除不可逆，请谨慎！！</Typography>,
+        //     cancelText:'我点错了',
+        //     onText:'残忍删除',
+        //     content:<Typography level={4}>确定是否删除<Text mark>{ record.title }？</Text></Typography>
+        // })
+        this.setState({
+            isModalvisible: true,
+            modalTitle: record.title,
+            ArticalId: record.id,
+        })
+    }
+
+    handleModalCancel = () => {
+        this.setState({
+            isModalvisible: false,
+            isConfimLoading: false,
+            modalTitle: '',
+            ArticalId: '',
+        })
+    }
+
+    handleModalOk = () => {
+        this.setState({
+            isConfimLoading: true,
+        })
+        deleteArticalItem(this.state.ArticalId)
+            .then(resp => {
+                message.success(resp.msg);
+                //这里沟通的时候有坑，到底留在当前页还是回到第一页；
+                this.setState({
+                    pageNumber: 1,
+                }, () => {//在回调里面请求数据
+                    this.getData()
+                })
+            })
+            .finally(msg => {
+                this.setState({
+                    isConfimLoading: false,
+                    isModalvisible: false
+                })
+            })
     }
 
     getData = () => {
@@ -171,7 +234,7 @@ class Artical extends Component {
     }
     render() {
         return (
-        <Card title="文章列表" extra={<Button onClick={this.exportData} type="primary" shape="round" icon={<DownloadOutlined />}> 导出数据 </Button>}>
+            <Card title="文章列表" extra={<Button onClick={this.exportData} type="primary" shape="round" icon={<DownloadOutlined />}> 导出数据 </Button>}>
                 <Table
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
@@ -180,6 +243,7 @@ class Artical extends Component {
                     pagination={{
                         total:this.state.total,
                         pageSize:this.state.pageSize,
+                        current:this.state.pageNumber,
                         defaultPageSize:10,
                         hideOnSinglePage: true,//当条数为零时是否显示分页
                         showQuickJumper:true,
@@ -188,6 +252,16 @@ class Artical extends Component {
                         onShowSizeChange:this.onShowSizeChange,
                     }}
                 />
+                <Modal
+                    title={<Title level={4}><DeleteTwoTone twoToneColor='#F00' />删除不可逆，请谨慎！！</Title>}
+                    visible={this.state.isModalvisible}
+                    onOk={this.handleModalOk.bind(this, this.state.ArticalId)}
+                    onCancel={this.handleModalCancel}
+                    confirmLoading={this.state.isConfimLoading}
+                    maskClosable={false}
+                    >
+                        <Typography level={4}>确定是否删除<Text mark>{ this.state.modalTitle }</Text>？</Typography>
+                </Modal>
             </Card>
         );
     }
