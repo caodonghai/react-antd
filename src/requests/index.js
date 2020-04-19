@@ -12,7 +12,7 @@ service.interceptors.request.use((config) => {
         // authToken: window.localStorage.getItem('authToken')//本地存贮获取token
         authToken: 'fhusfheiuhruehgui'
     })
-    console.log(config)
+    // console.log(config)
     return config
 })
 
@@ -37,4 +37,10 @@ export const getArticals = (pageSize = 10, pageNumber = 1) => {
 //文章删除
 export const deleteArticalItem = (id) => {
     return service.post(`/api/v1/articalDelete${id}`)
+}
+
+//通过id获取文章详情
+
+export const getArticalDetail = (id) => {
+    return service.post(`/api/v1/artical/${id}`)
 }
