@@ -22,7 +22,7 @@ service.interceptors.response.use((resp) => {
         return resp.data.data
     } else {
         //全局处理错误
-        message.error(resp.data.data.errMsg)
+        message.error(resp.data.errMsg)
     }
 })
 
@@ -40,7 +40,11 @@ export const deleteArticalItem = (id) => {
 }
 
 //通过id获取文章详情
-
 export const getArticalDetail = (id) => {
     return service.post(`/api/v1/artical/${id}`)
+}
+
+//通过id修改并提交保存至服务器
+export const saveArticalByid = (id, data) => {
+    return service.post(`/api/v1/articalUpdate/${id}`, data)
 }
