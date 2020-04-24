@@ -44,6 +44,10 @@ const ArticalEdit = Loadable({
     loading: Loading
 })
 
+const MessageList = Loadable({
+    loader: () => import('./Messages/Messages'),
+    loading: Loading
+})
 
 export {
     DashBoard,
@@ -51,5 +55,6 @@ export {
     NotFound,
     Artical,
     Settings,
-    ArticalEdit
+    ArticalEdit,
+    MessageList
 }

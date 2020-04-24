@@ -60,7 +60,7 @@ class Edit extends Component {
 
     //控制富文本编辑区收缩展开状态
     editorToggle = () => {
-        console.log(this.editorRef2)
+        // console.log(this.editorRef2)
         if(this.editorRef2.current.style.height === '300px') {
             this.editorRef2.current.style.height = 'auto';
             this.setState({
@@ -127,7 +127,7 @@ class Edit extends Component {
             const data = Object.assign({}, values, {
                 createAt: moment(values.createAt).valueOf(),
             })
-            console.log({data});
+            // console.log({data});
             saveArticalByid(this.props.match.id, data)
                 .then(resp => {
                     message.success('保存成功')

@@ -4,7 +4,8 @@ import {
     NotFound,
     Artical,
     Settings,
-    ArticalEdit
+    ArticalEdit,
+    MessageList
 } from '../views'
 
 import React from 'react';
@@ -52,4 +53,10 @@ export const adminRouter = [{
 //     title: '阿里招聘首页 ',
 //     icon: <SettingOutlined />,
 //     isNav: true
-}]
+}, {
+    pathname: '/admin/messageList',
+    components: MessageList,
+    title: '消息列表',
+    icon: '',
+    isNav: false
+}, ]

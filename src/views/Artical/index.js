@@ -187,7 +187,7 @@ class Artical extends Component {
     }
 
     onPaginationChange = (pageNumber, pageSize) => {
-        console.log({pageNumber, pageSize});
+        // console.log({pageNumber, pageSize});
         this.setState({
             pageNumber: pageNumber,
             pageSize: pageSize
@@ -197,7 +197,7 @@ class Artical extends Component {
     }
 
     onShowSizeChange = (current, pageSize) => {
-        console.log({current, pageSize})
+        // console.log({current, pageSize})
         this.setState({
             pageNumber:1,
             pageSize,

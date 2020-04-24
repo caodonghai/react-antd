@@ -18,7 +18,7 @@ const Loadable = ({//是一个高阶组件
                     this.setState({
                         LoadedComponent: resp.default,
                     })
-                    console.log(resp.default)
+                    // console.log(resp.default)
                 })
         }
 

@@ -48,3 +48,13 @@ export const getArticalDetail = (id) => {
 export const saveArticalByid = (id, data) => {
     return service.post(`/api/v1/articalUpdate/${id}`, data)
 }
+
+//获取文章可视化数据
+export const getArticalReaded = () => {
+    return service.post('/api/v1/articalReaded')
+}
+
+//获取用户消息列表
+export const getMessages = () => {
+    return service.post('/api/v1/messageList/:id',{})
+}
