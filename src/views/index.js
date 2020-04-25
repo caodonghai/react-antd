@@ -24,6 +24,11 @@ const Login = Loadable({
     loading: Loading
 })
 
+const Register = Loadable({
+    loader: () => import('./Register/Register'),
+    loading: Loading
+})
+
 const Artical = Loadable({
     loader: () => import('./Artical'),
     loading: Loading
@@ -52,6 +57,7 @@ const MessageList = Loadable({
 export {
     DashBoard,
     Login,
+    Register,
     NotFound,
     Artical,
     Settings,

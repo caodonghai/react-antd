@@ -1,6 +1,7 @@
 import {
     DashBoard,
     Login,
+    Register,
     NotFound,
     Artical,
     Settings,
@@ -14,6 +15,12 @@ import { DashboardOutlined, UnorderedListOutlined, EditOutlined,SettingOutlined 
 export const mainRouter = [{
     pathname: '/login',
     components: Login
+}, {
+    pathname: '/Register',
+    components: Register,
+    title: '注册',
+    icon: '',
+    isNav: false
 }, {
     pathname: '/404',
     components: NotFound

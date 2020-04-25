@@ -6,6 +6,8 @@ const service = axios.create({
     baseURL: isDev ? 'http://rap2.taobao.org:38080/app/mock/251246' : ''
 })
 
+
+
 //请求拦截
 service.interceptors.request.use((config) => {
     config.data = Object.assign({}, config.data, {
@@ -18,6 +20,20 @@ service.interceptors.request.use((config) => {
 
 //响应拦截
 service.interceptors.response.use((resp) => {
+    if (resp.data.code === 200) {
+        return resp.data.data
+    } else {
+        //全局处理错误
+        message.error(resp.data.errMsg)
+    }
+})
+
+const serviceLogin = axios.create({
+    baseURL: isDev ? 'http://rap2.taobao.org:38080/app/mock/251246' : ''
+})
+
+//响应拦截
+serviceLogin.interceptors.response.use((resp) => {
     if (resp.data.code === 200) {
         return resp.data.data
     } else {
@@ -57,4 +73,9 @@ export const getArticalReaded = () => {
 //获取用户消息列表
 export const getMessages = () => {
     return service.post('/api/v1/messageList/:id',{})
+}
+
+//用户登陆
+export const userLogin = (data) => {
+    return serviceLogin.post('/api/v1/login', data)
 }

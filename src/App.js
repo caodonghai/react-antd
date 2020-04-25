@@ -5,6 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { Frame } from './components'
 
+import { connect } from 'react-redux'
+
 // const testHOC = (WrappedComponent) => {
 //     return class HOCComponrnt extends Component {
 //         render() {
@@ -53,9 +55,18 @@ import { Frame } from './components'
 
 const menus = adminRouter.filter(route => route.isNav === true );
 
+const mapSrtate = state => {
+    return {
+        isLogin: state.loginReducer.isLogin
+    }
+}
+
+@connect(mapSrtate,)
 class App extends Component {
     render() {
         return (
+            this.props.isLogin
+            ?
             <Frame menus={menus}>
                 <Switch>
                     {
@@ -76,6 +87,8 @@ class App extends Component {
                     <Redirect to="/404" />
                 </Switch>
             </Frame>
+            :
+            <Redirect to='/login' />
         );
     }
 }

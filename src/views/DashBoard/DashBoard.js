@@ -31,7 +31,8 @@ class DashBoard extends Component {
                     color: '#5CADAD',
                     name: '孙悟空',
                 }
-            ]
+            ],
+            appCurrentIndex: -1,
         }
         this.readedRef = createRef()
     }
@@ -114,6 +115,7 @@ class DashBoard extends Component {
                     };
                     const option = {
                         color: optionColor,//['#4cabce', '#e5323e'],
+                        animationDuration: 5000,
                         tooltip: {
                             trigger: 'axis',
                             axisPointer: {
@@ -151,17 +153,56 @@ class DashBoard extends Component {
                                 name: dataSource.legendData[1],
                                 type: 'bar',
                                 label: labelOption,
-                                data: dataSource.seriesData[0],//[150, 232, 201, 154, 190]
+                                data: dataSource.seriesData[0],//[150, 232, 201, 154, 190],
+                                itemStyle: {
+                                    normal: {
+                                        barBorderRadius: 50,
+                                    },
+                                },
                             },
                             {
                                 name: dataSource.legendData[2],//'Wetland',
                                 type: 'bar',
                                 label: labelOption,
-                                data: dataSource.seriesData[1],//[98, 77, 101, 99, 40]
+                                data: dataSource.seriesData[1],//[98, 77, 101, 99, 40],
+                                itemStyle: {
+                                    normal: {
+                                        barBorderRadius: 50,
+                                    },
+                                },
                             }
                         ],
                     };
+
                     this.myChart.setOption(option);
+                    
+                    const dataLen = option.series[0].data.length;
+                    // 取消之前高亮的图形
+                    this.myChart.dispatchAction({
+                    type: 'downplay',
+                    seriesIndex: 0,
+                    dataIndex: this.state.appCurrentIndex
+                    });
+                    // this.setState({
+                    //     appCurrentIndex: (this.state.appCurrentIndex + 1) % dataLen
+                    // })
+                    this.setState(state => {
+                        return {
+                            appCurrentIndex: (state.appCurrentIndex + 1) % dataLen
+                        }
+                    })
+                    // 高亮当前图形
+                    this.myChart.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 0,
+                        dataIndex: this.state.appCurrentIndex,
+                    });
+                    // 显示 tooltip
+                    this.myChart.dispatchAction({
+                        type: 'showTip',
+                        seriesIndex: 0,
+                        dataIndex: this.state.appCurrentIndex
+                    });
                 }
             })
             .finally(res => {

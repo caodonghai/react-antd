@@ -23,6 +23,7 @@ render(
                         //TODO:权限，需要登录才能登录/admin
                         return <App {...routerProps} />
                     }} />
+                    <Route path="/admin" component={App} />
                     {
                         mainRouter.map(route => {
                             return <Route key={route.pathname} path={route.pathname} component={route.components} />

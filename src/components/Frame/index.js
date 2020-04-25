@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Layout, Menu, Avatar, Dropdown, Badge  } from 'antd';
-import { UserOutlined, DownOutlined, LogoutOutlined, SettingOutlined, WhatsAppOutlined } from '@ant-design/icons'
+import { DownOutlined, LogoutOutlined, SettingOutlined, WhatsAppOutlined } from '@ant-design/icons'
 import Logo from './logo.png'
 import './index.less'
 import { getMessagesList } from '../../action/messadesActions'
+import { logOut } from '../../action/loginActions'
 
 import { connect } from 'react-redux'
 
@@ -12,15 +13,17 @@ import { connect } from 'react-redux'
 const { Header, Content, Sider } = Layout;
 
 const mapState = state => {
+    console.log({state})
     const {
         list,
     } = state.messagesReducers
     return {
-        listLength: list.filter(item => !item.type).length
+        listLength: list.filter(item => !item.type).length,
+        loginReducer: state.loginReducer
     }
 }
 
-@connect(mapState, { getMessagesList })
+@connect(mapState, { getMessagesList, logOut })
 @withRouter
 class Frame extends Component {
 
@@ -33,10 +36,17 @@ class Frame extends Component {
     }
 
     onHeaderMenuClick = ({key}) => {
-        this.props.history.push(key)
+        if (key === '/login') {
+            this.props.logOut()
+            window.localStorage.clear()
+            window.sessionStorage.clear()
+        } else {
+           this.props.history.push(key) 
+        }
     }
     
     render() {
+        console.log(this.props)
         //处理路由跳转后侧边栏高亮效果消失的问题
         const selectedKeys = this.props.location.pathname.split('/');
         selectedKeys.length = 3;
@@ -75,12 +85,12 @@ class Frame extends Component {
                     <div>
                     <Dropdown overlay={menu}  placement="bottomRight">
                         <div onClick={e => e.preventDefault()} style={{display: 'inline-block'}}>
-                            欢迎您：菜徐坤
+                            欢迎您：{this.props.loginReducer.uaerName}
                         <DownOutlined />
                         </div>
                     </Dropdown>
                         <Badge count={this.props.listLength}>
-                            <Avatar size="large" style={{marginLeft: '8px'}} icon={<UserOutlined />} />
+                            <Avatar size="large" style={{marginLeft: '8px'}} src={this.props.loginReducer.avatar} />
                         </Badge>
                     </div>
                 </Header>
@@ -119,15 +129,15 @@ class Frame extends Component {
                 </Sider>
                 <Layout style={{ padding: '16px',paddingBottom: 0 }}>
                     <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 0,
-                        paddingBottom: 0,
-                        margin: 0,
-                        height: '100%',
-                    }}
+                        className="site-layout-background"
+                        style={{
+                            padding: 0,
+                            paddingBottom: 0,
+                            margin: 0,
+                            height: '100%',
+                        }}
                     >
-                    { this.props.children }
+                        { this.props.children }
                     </Content>
                 </Layout>
                 </Layout>
