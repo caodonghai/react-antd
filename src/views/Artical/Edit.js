@@ -37,7 +37,7 @@ class Edit extends Component {
         this.editorRef2 = createRef()
     }
 
-    componentDidMount() {
+    componentDidMount () {
         this.initEditor()
         this.getDetail()
     }

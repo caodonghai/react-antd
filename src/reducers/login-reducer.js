@@ -32,7 +32,8 @@ export default (state = initData, action) => {
                 avatoar: '',
                 nikeName: '',
                 isLoginLoading: false,
-                isLogin: false
+                isLogin: false,
+                role: ''
             }
         default:
             return state

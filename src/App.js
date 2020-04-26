@@ -56,8 +56,10 @@ import { connect } from 'react-redux'
 const menus = adminRouter.filter(route => route.isNav === true );
 
 const mapSrtate = state => {
+    console.log({state})
     return {
-        isLogin: state.loginReducer.isLogin
+        isLogin: state.loginReducer.isLogin,
+        role: state.loginReducer.role,
     }
 }
 
@@ -71,13 +73,18 @@ class App extends Component {
                 <Switch>
                     {
                         adminRouter.map(route => {
+                            console.log(route)
                             return (
                                 <Route
                                     exact={route.exact}
                                     key={route.pathname}
                                     path={route.pathname}
                                     render={(reuteprops) => {
-                                        return <route.components {...reuteprops} />
+                                        //此处做了权限管理
+                                        // console.log(route.roles.includes(this.props.role))
+                                        // console.log(this.props.role)
+                                        const hasPower = route.roles.includes(this.props.role)
+                                        return hasPower ? <route.components {...reuteprops} /> : <Redirect to='/admin/noPower' />
                                     }}
                                 />
                             )

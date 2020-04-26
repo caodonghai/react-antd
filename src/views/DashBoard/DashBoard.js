@@ -36,7 +36,7 @@ class DashBoard extends Component {
         }
         this.readedRef = createRef()
     }
-    componentDidMount() {
+    componentDidMount () {
         this.getData();
         this.timeOuter = setInterval(() => {
             this.getData();
@@ -51,12 +51,14 @@ class DashBoard extends Component {
     changeDashboardData = () => {
         const otherDashBoardDate = this.state.dashBoardDate;
         otherDashBoardDate.unshift(otherDashBoardDate.pop());
+        if (!this.updater.isMounted(this)) return
         this.setState({
             dashBoardDate: otherDashBoardDate
         })
     }
 
     getData = () => {
+        if (!this.updater.isMounted(this)) return
         this.setState({
             isSpin: true,
         })
@@ -186,6 +188,7 @@ class DashBoard extends Component {
                     // this.setState({
                     //     appCurrentIndex: (this.state.appCurrentIndex + 1) % dataLen
                     // })
+                    if (!this.updater.isMounted(this)) return
                     this.setState(state => {
                         return {
                             appCurrentIndex: (state.appCurrentIndex + 1) % dataLen
@@ -206,6 +209,7 @@ class DashBoard extends Component {
                 }
             })
             .finally(res => {
+                if (!this.updater.isMounted(this)) return
                 this.setState({
                     isSpin: false,
                 })

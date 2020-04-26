@@ -6,7 +6,9 @@ import {
     Artical,
     Settings,
     ArticalEdit,
-    MessageList
+    MessageList,
+    NoPower,
+    IndividualSettings
 } from '../views'
 
 import React from 'react';
@@ -31,14 +33,23 @@ export const adminRouter = [{
     components: DashBoard,
     title: '仪表盘',
     icon: <DashboardOutlined />,
-    isNav: true
+    isNav: true,
+    roles: ['001', '002', '003']
 }, {
+    pathname: '/admin/noPower',
+    components: NoPower,
+    title: '没有权限',
+    roles: ['001', '002', '003'],
+    icon: '',
+    isNav: false
+},{
     pathname: '/admin/artical',
     components: Artical,
     title: '文章管理',
     icon: <UnorderedListOutlined />,
     isNav: true,
     exact: true,
+    roles: ['001', '002']
     // children: {
     //     ...//二级菜单
     // }
@@ -47,13 +58,15 @@ export const adminRouter = [{
     components: ArticalEdit,
     title: '文章编辑',
     icon: <EditOutlined />,
-    isNav: false
+    isNav: false,
+    roles: ['001', '002']
 }, {
     pathname: '/admin/settings',
     components: Settings,
     title: '设置',
     icon: <SettingOutlined />,
-    isNav: true
+    isNav: true,
+    roles: ['001']
 // }, {
 //     pathname: '/alibaba/home',
 //     components: Settings,
@@ -65,5 +78,13 @@ export const adminRouter = [{
     components: MessageList,
     title: '消息列表',
     icon: '',
-    isNav: false
+    isNav: false,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/IndividualSettings',
+    components: IndividualSettings,
+    title: '个人设置',
+    icon: '',
+    isNav: false,
+    roles: ['001', '002', '003']
 }, ]

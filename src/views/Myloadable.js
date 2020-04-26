@@ -11,7 +11,7 @@ const Loadable = ({//是一个高阶组件
             LoadedComponent: null
         }
 
-        componentDidMount() {
+        componentDidMount () {
             //以下语句相当于执行：import('./dashboard')
             loader()
                 .then(resp => {

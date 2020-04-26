@@ -40,7 +40,7 @@ class Messages extends Component {
     //         list: [],
     //       };
     // }
-    componentDidMount() {
+    componentDidMount () {
         // this.getData();
     }
 

@@ -13,7 +13,6 @@ import { connect } from 'react-redux'
 const { Header, Content, Sider } = Layout;
 
 const mapState = state => {
-    console.log({state})
     const {
         list,
     } = state.messagesReducers
@@ -27,7 +26,7 @@ const mapState = state => {
 @withRouter
 class Frame extends Component {
 
-    componentDidMount() {
+    componentDidMount () {
         this.props.getMessagesList()
     }
 
@@ -46,7 +45,7 @@ class Frame extends Component {
     }
     
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         //处理路由跳转后侧边栏高亮效果消失的问题
         const selectedKeys = this.props.location.pathname.split('/');
         selectedKeys.length = 3;
@@ -63,7 +62,7 @@ class Frame extends Component {
                     </Badge>
                 </Menu.Item>
                 <Menu.Item
-                    key='/admin/settings'
+                    key='/admin/IndividualSettings'
                 >
                     <SettingOutlined />
                     个人设置

@@ -31,7 +31,7 @@ const mapData = state => {
 @connect(mapData, { login })
 class Login extends Component {
 
-    componentDidMount() {
+    componentDidMount () {
         this.autoLogin()
     }
 

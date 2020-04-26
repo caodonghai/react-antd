@@ -116,6 +116,7 @@ class Artical extends Component {
         //     onText:'残忍删除',
         //     content:<Typography level={4}>确定是否删除<Text mark>{ record.title }？</Text></Typography>
         // })
+        if (!this.updater.isMounted(this)) return
         this.setState({
             isModalvisible: true,
             modalTitle: record.title,
@@ -169,6 +170,7 @@ class Artical extends Component {
                 //         key: item,
                 //     }
                 // })
+                if (!this.updater.isMounted(this)) return//解决路由快速切换时this.setState找不到组件而报错的问题
                 this.setState({
                     dataSource: resp.list,
                     total: resp.total,
@@ -180,6 +182,7 @@ class Artical extends Component {
                 console.log(err)
             })
             .finally(() => {
+                if (!this.updater.isMounted(this)) return
                 this.setState({
                     isLoading: false
                 })
@@ -229,7 +232,7 @@ class Artical extends Component {
 		XLSX.writeFile(wb, `articalData-${moment().format('YYYY年MM月DD日 HH:mm:ss')}-导出数据.xlsx`)
     }
 
-    componentDidMount() {
+    componentDidMount () {
         this.getData();
     }
     render() {

@@ -24,6 +24,11 @@ const Login = Loadable({
     loading: Loading
 })
 
+const NoPower = Loadable({
+    loader: () => import('./NoPower/NoPower'),
+    loading: Loading
+})
+
 const Register = Loadable({
     loader: () => import('./Register/Register'),
     loading: Loading
@@ -54,6 +59,11 @@ const MessageList = Loadable({
     loading: Loading
 })
 
+const IndividualSettings = Loadable({
+    loader: () => import('./IndividualSettings/IndividualSettings'),
+    loading: Loading
+})
+
 export {
     DashBoard,
     Login,
@@ -62,5 +72,7 @@ export {
     Artical,
     Settings,
     ArticalEdit,
-    MessageList
+    MessageList,
+    NoPower,
+    IndividualSettings
 }
