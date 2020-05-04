@@ -56,7 +56,6 @@ import { connect } from 'react-redux'
 const menus = adminRouter.filter(route => route.isNav === true );
 
 const mapSrtate = state => {
-    console.log({state})
     return {
         isLogin: state.loginReducer.isLogin,
         role: state.loginReducer.role,
@@ -73,7 +72,6 @@ class App extends Component {
                 <Switch>
                     {
                         adminRouter.map(route => {
-                            console.log(route)
                             return (
                                 <Route
                                     exact={route.exact}

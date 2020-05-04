@@ -64,6 +64,11 @@ const IndividualSettings = Loadable({
     loading: Loading
 })
 
+const MapMeaaure = Loadable({
+    loader: () => import('./MapMeasures/MapMeasures'),
+    loading: Loading
+})
+
 export {
     DashBoard,
     Login,
@@ -74,5 +79,6 @@ export {
     ArticalEdit,
     MessageList,
     NoPower,
-    IndividualSettings
+    IndividualSettings,
+    MapMeaaure
 }

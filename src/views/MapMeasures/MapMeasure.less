@@ -1,0 +1,141 @@
+#container {
+    width:100%;
+    height: 90vh;
+    background-color: rgb(109, 164, 180);
+    text-align: center;
+
+    .map_position {
+        position: absolute;
+        right: 50%;
+        transform: translate3d(50%, 0, 0);
+        top: 10px;
+        z-index: 10;
+        background: rgb(132, 193, 235);
+        padding: 3px 8px;
+        border-radius: 20px;
+    }
+
+    .map_leftBottom_icon {
+        background-color: rgb(255, 255, 255);
+        position: absolute;
+        right: 130px;
+        bottom: 0px;
+        z-index: 1;
+        border: 2px dotted #000;
+        border-radius: 5px;
+        width: 120px;
+        height: 120px;
+        // padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        div {
+            font-size: 20px;
+
+            img {
+                height: 35px;
+            }
+            
+        }
+    }
+
+    .input-card {
+        z-index: 1;
+        position: absolute;
+        right: 80px;
+        width: auto;
+        height: 85px;
+        top: 10px;
+        background-color: #FFF;
+        border: 1px dotted #000;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+
+    }
+}  
+
+.amap-geolocation-con {
+    bottom: 50px !important;
+}
+
+
+
+.content-window-card {
+    position: relative;
+    box-shadow: none;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    padding: 0;
+}
+
+.content-window-card p {
+    height: 2rem;
+}
+
+.custom-info {
+    border: solid 1px silver;
+}
+
+div.info-top {
+    position: relative;
+    background: none repeat scroll 0 0 #F9F9F9;
+    border-bottom: 1px solid #CCC;
+    border-radius: 5px 5px 0 0;
+}
+
+div.info-top div {
+    display: inline-block;
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 31px;
+    padding: 0 10px;
+}
+
+div.info-top img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition-duration: 0.25s;
+    cursor: pointer;
+}
+
+div.info-top img:hover {
+    box-shadow: 0px 0px 5px #000;
+}
+
+div.info-middle {
+    font-size: 12px;
+    padding: 10px 6px;
+    line-height: 20px;
+    text-align: left;
+}
+
+div.info-bottom {
+    height: 0px;
+    width: 100%;
+    clear: both;
+    text-align: center;
+}
+
+div.info-bottom img {
+    position: relative;
+    z-index: 104;
+}
+
+span {
+    margin-left: 5px;
+    font-size: 11px;
+}
+
+.info-middle img {
+    float: left;
+    margin-right: 6px;
+}

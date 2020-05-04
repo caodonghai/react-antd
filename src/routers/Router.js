@@ -8,11 +8,12 @@ import {
     ArticalEdit,
     MessageList,
     NoPower,
-    IndividualSettings
+    IndividualSettings,
+    MapMeaaure
 } from '../views'
 
 import React from 'react';
-import { DashboardOutlined, UnorderedListOutlined, EditOutlined,SettingOutlined } from '@ant-design/icons';
+import { DashboardOutlined, UnorderedListOutlined, EditOutlined,SettingOutlined,SlackOutlined } from '@ant-design/icons';
 
 export const mainRouter = [{
     pathname: '/login',
@@ -87,4 +88,11 @@ export const adminRouter = [{
     icon: '',
     isNav: false,
     roles: ['001', '002', '003']
-}, ]
+}, {
+    pathname: '/admin/MapMeaaure',
+    components: MapMeaaure,
+    title: '天网',
+    icon: <SlackOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+},]

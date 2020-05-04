@@ -79,3 +79,8 @@ export const getMessages = () => {
 export const userLogin = (data) => {
     return serviceLogin.post('/api/v1/login', data)
 }
+
+//获取地图点位信息
+export const getMapMarker = () => {
+    return service.post('/api/v1/mapMarker')
+}
