@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import './MapMeasure.less'
+import './mapMeasure.less'
 import AMap from 'AMap'
 import { Radio, Button } from 'antd';
 import { getMapMarker } from '../../requests'
+import { creatRandomNumber } from '../../myFunction'
 
 class MapMeasures extends Component {
     constructor() {
@@ -11,12 +12,18 @@ class MapMeasures extends Component {
             position: '',
             value: '',
             overlays: [],
+            index: 0,
         }
     }
     componentDidMount() {
         this.initMap()
         this.getMapMarkerList()
     }
+
+    componentWillUnmount() {
+        clearInterval(this.timer)
+    }
+
     initMap = () => {
         this.map = new AMap.Map('container', {
             zoom: 13,  //设置地图显示的缩放级别
@@ -47,6 +54,7 @@ class MapMeasures extends Component {
             citySearch.getLocalCity(function (status, result) {
                 if (status === 'complete' && result.info === 'OK') {
                     // 查询成功，result即为当前所在城市信息
+                    if (!_this.updater.isMounted(_this)) return//解决路由快速切换时this.setState找不到组件而报错的问题
                     _this.setState({
                         position: `你所在的位置：${result.province}—${result.city}`
                     })
@@ -90,6 +98,7 @@ class MapMeasures extends Component {
                 const newMarkerData = this.getLatAndLng(resp.data)
                 this.mapMarker(newMarkerData)
             })
+
     }
     
     //将拿回的数字处理成经纬度
@@ -147,6 +156,7 @@ class MapMeasures extends Component {
                     position: [Number(element.lat), Number(element.lng)],
                     // anchor:'top-center', // 设置锚点方位
                 });
+                
                 const circle = new AMap.Circle({
                     center: new AMap.LngLat(Number(element.lat), Number(element.lng)), // 圆心位置
                     radius: 2500,  //半径
@@ -158,82 +168,122 @@ class MapMeasures extends Component {
                 });
                 this.map.add([marker, circle]);
                 
-                //关闭信息窗体
-                // var closeInfoWindow = () => {
-                //     console.log('kkkk')
-                //     _this.map.clearInfoWindow();
-                // }
-
-                //构建自定义信息窗体
-                let createInfoWindow = (title, content) => {
-                    // console.log(title, content)
-                    let info = document.createElement("div");
-                    info.className = "custom-info";
-
-                    //可以通过下面的方式修改自定义窗体的宽高
-                    //info.style.width = "400px";
-                    // 定义顶部标题
-                    let top = document.createElement("div");
-                    let titleD = document.createElement("div");
-                    let closeX = document.createElement("img");
-                    top.className = "info-top";
-                    titleD.innerHTML = title;
-                    closeX.src = "https://webapi.amap.com/images/close2.gif";
-                    // closeX.style.cursor = 'pointer'
-                    closeX.onclick = () => {
-                        _this.map.clearInfoWindow();
-                    };
-
-                    top.appendChild(titleD);
-                    top.appendChild(closeX);
-                    info.appendChild(top);
-
-                    // 定义中部内容
-                    let middle = document.createElement("div");
-                    middle.className = "info-middle";
-                    middle.style.backgroundColor = 'white';
-                    middle.innerHTML = content;
-                    info.appendChild(middle);
-
-                    // 定义底部内容
-                    let bottom = document.createElement("div");
-                    bottom.className = "info-bottom";
-                    bottom.style.position = 'relative';
-                    bottom.style.top = '0px';
-                    bottom.style.margin = '0 auto';
-                    let sharp = document.createElement("img");
-                    sharp.src = "https://webapi.amap.com/images/sharp.png";
-                    bottom.appendChild(sharp);
-                    info.appendChild(bottom);
-                    return info;
-                }
-                
-
                 AMap.event.addListener(marker, 'click', (e) => {
-                    //实例化信息窗体
+                    _this.newInfoWindow(e)
+                    //实例化信息窗体,如果在这里写法就是这样
+                    // let data = e.target.w.info
+                    // let title = data.title,
+                    // content = [];
+                    // content.push(`<img style='height:80px' src=${data.image}>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里`);
+                    // content.push("电话：010-64733333");
+                    // content.push("<a href='javascript:void(0)'>详细信息</a>");
+                    // let infoWindow = new AMap.InfoWindow({
+                    // isCustom: true,  //使用自定义窗体
+                    // content: _this.createInfoWindow(title, content.join("<br/>")),
+                    // offset: new AMap.Pixel(16, -45)
+                    // });
+                    // infoWindow.open(_this.map, marker.getPosition());//如果在这里写法就是这样
+                    // // console.log(e.target.w.info)
+                });
+
+                AMap.event.addListener(marker, 'mouseover', (e) => {
                     let data = e.target.w.info
-                    let title = data.title,
-                    content = [];
-                    content.push(`<img style='height:80px' src=${data.image}>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里`);
-                    content.push("电话：010-64733333");
-                    content.push("<a href='javascript:void(0)'>详细信息</a>");
                     let infoWindow = new AMap.InfoWindow({
                     isCustom: true,  //使用自定义窗体
-                    content: createInfoWindow(title, content.join("<br/>")),
-                    offset: new AMap.Pixel(16, -45)
+                    content: `<div style='background-color: rgb(132, 193, 235); padding: 0 5px; border-radius: 10px'>${data.title}</ div>`,
+                    offset: new AMap.Pixel(0, -35)
                     });
                     infoWindow.open(_this.map, marker.getPosition());
                     // console.log(e.target.w.info)
-
                 });
             });
         }
+        _this.timer = setInterval(() => {_this.intervalTimer(_this.state.index)},8000)
     }
 
-    
+    //实例化信息窗体
+    newInfoWindow = (e) => {
+        //实例化信息窗体
+        let data = e.target ? e.target.w.info : e.w.info
+        let title = data.title,
+        content = [];
+        content.push(`<img style='height:80px' src=${data.image}>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里`);
+        content.push("电话：010-64733333");
+        content.push("<a href='javascript:void(0)'>详细信息</a>");
+        let infoWindow = new AMap.InfoWindow({
+        isCustom: true,  //使用自定义窗体
+        content: this.createInfoWindow(title, content.join("<br/>")),
+        offset: new AMap.Pixel(16, -45)
+        });
+        infoWindow.open(this.map, e.target ? e.target.getPosition() : e.getPosition());//如果在这里写法就是这样
+        // console.log(e.target.w.info)
+    }
+    //构建自定义信息窗体
+    createInfoWindow = (title, content) => {
+        // console.log(title, content)
+        let info = document.createElement("div");
+        info.className = "custom-info";
+
+        //可以通过下面的方式修改自定义窗体的宽高
+        //info.style.width = "400px";
+        // 定义顶部标题
+        let top = document.createElement("div");
+        let titleD = document.createElement("div");
+        let closeX = document.createElement("img");
+        top.className = "info-top";
+        titleD.innerHTML = title;
+        closeX.src = "https://webapi.amap.com/images/close2.gif";
+        // closeX.style.cursor = 'pointer'
+        closeX.onclick = () => {
+            this.map.clearInfoWindow();
+        };
+
+        top.appendChild(titleD);
+        top.appendChild(closeX);
+        info.appendChild(top);
+
+        // 定义中部内容
+        let middle = document.createElement("div");
+        middle.className = "info-middle";
+        middle.style.backgroundColor = 'white';
+        middle.innerHTML = content;
+        info.appendChild(middle);
+
+        // 定义底部内容
+        let bottom = document.createElement("div");
+        bottom.className = "info-bottom";
+        bottom.style.position = 'relative';
+        bottom.style.top = '0px';
+        bottom.style.margin = '0 auto';
+        let sharp = document.createElement("img");
+        sharp.src = "https://webapi.amap.com/images/sharp.png";
+        bottom.appendChild(sharp);
+        info.appendChild(bottom);
+        return info;
+    }
+
+    //关闭信息窗体
+    // closeInfoWindow = () => {
+    //     console.log('kkkk')
+    //     this.map.clearInfoWindow();
+    // }
+
+    intervalTimer = (index) => {
+        let indexMarlers = this.map.getAllOverlays('marker')[index]
+        let markersLen = this.map.getAllOverlays('marker').length - 1
+        this.newInfoWindow(indexMarlers)
+        this.map.setCenter(indexMarlers.getPosition())
+        this.map.setZoom(creatRandomNumber(9, 13))
+        this.map.setPitch(creatRandomNumber(7, 80))
+        let newIndex = index >= markersLen ? 0 : index + 1
+        this.setState({
+            index: newIndex
+        })
+    }
 
     onChange = e => {
         let _this = this
+        clearInterval(_this.timer)
         this.setState({
             value: e.target.value,
         });

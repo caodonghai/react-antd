@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import { Layout, Menu, Avatar, Dropdown, Badge  } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Badge, Affix } from 'antd';
 import { DownOutlined, LogoutOutlined, SettingOutlined, WhatsAppOutlined } from '@ant-design/icons'
 import Logo from './logo.png'
 import './index.less'
@@ -77,22 +77,24 @@ class Frame extends Component {
         );
         return (
             <Layout style={{minHeight: '100%'}}>
-                <Header className="header HZ-header">
-                    <div className="logo HZ-logo">
-                            <img src={Logo} alt="HZXY" title="海子学院" />
-                    </div>
-                    <div>
-                    <Dropdown overlay={menu}  placement="bottomRight">
-                        <div onClick={e => e.preventDefault()} style={{display: 'inline-block'}}>
-                            欢迎您：{this.props.loginReducer.uaerName}
-                        <DownOutlined />
+                <Affix>
+                    <Header className="header HZ-header">
+                        <div className="logo HZ-logo">
+                                <img src={Logo} alt="HZXY" title="海子学院" />
                         </div>
-                    </Dropdown>
-                        <Badge count={this.props.listLength}>
-                            <Avatar size="large" style={{marginLeft: '8px'}} src={this.props.loginReducer.avatar} />
-                        </Badge>
-                    </div>
-                </Header>
+                        <div>
+                        <Dropdown overlay={menu}  placement="bottomRight">
+                            <div onClick={e => e.preventDefault()} style={{display: 'inline-block'}}>
+                                欢迎您：{this.props.loginReducer.uaerName}
+                            <DownOutlined />
+                            </div>
+                        </Dropdown>
+                            <Badge count={this.props.listLength}>
+                                <Avatar size="large" style={{marginLeft: '8px'}} src={this.props.loginReducer.avatar} />
+                            </Badge>
+                        </div>
+                    </Header>
+                </Affix>
                 <Layout>
                 <Sider
                     width={200}

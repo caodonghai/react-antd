@@ -84,3 +84,13 @@ export const userLogin = (data) => {
 export const getMapMarker = () => {
     return service.post('/api/v1/mapMarker')
 }
+
+//获取SwiperOne数据
+export const getSwiperOneList = () => {
+    return service.post('/api/v1/swiperOne')
+}
+
+//获取作品
+export const getWorksSHowList = () => {
+    return service.post('/api/v1/worksShow')
+}

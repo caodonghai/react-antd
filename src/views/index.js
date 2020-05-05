@@ -69,6 +69,11 @@ const MapMeaaure = Loadable({
     loading: Loading
 })
 
+const Vision = Loadable({
+    loader: () => import('./Vision/Vision'),
+    loading: Loading
+})
+
 export {
     DashBoard,
     Login,
@@ -80,5 +85,6 @@ export {
     MessageList,
     NoPower,
     IndividualSettings,
-    MapMeaaure
+    MapMeaaure,
+    Vision
 }

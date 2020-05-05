@@ -9,11 +9,19 @@ import {
     MessageList,
     NoPower,
     IndividualSettings,
-    MapMeaaure
+    MapMeaaure,
+    Vision
 } from '../views'
 
 import React from 'react';
-import { DashboardOutlined, UnorderedListOutlined, EditOutlined,SettingOutlined,SlackOutlined } from '@ant-design/icons';
+import {
+    DashboardOutlined,
+    UnorderedListOutlined,
+    EditOutlined,
+    SettingOutlined,
+    SlackOutlined,
+    GlobalOutlined
+} from '@ant-design/icons';
 
 export const mainRouter = [{
     pathname: '/login',
@@ -62,6 +70,20 @@ export const adminRouter = [{
     isNav: false,
     roles: ['001', '002']
 }, {
+    pathname: '/admin/mapMeaaure',
+    components: MapMeaaure,
+    title: '高控天网',
+    icon: <SlackOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/vision',
+    components: Vision,
+    title: '视界',
+    icon: <GlobalOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
     pathname: '/admin/settings',
     components: Settings,
     title: '设置',
@@ -87,12 +109,5 @@ export const adminRouter = [{
     title: '个人设置',
     icon: '',
     isNav: false,
-    roles: ['001', '002', '003']
-}, {
-    pathname: '/admin/MapMeaaure',
-    components: MapMeaaure,
-    title: '天网',
-    icon: <SlackOutlined />,
-    isNav: true,
     roles: ['001', '002', '003']
 },]
