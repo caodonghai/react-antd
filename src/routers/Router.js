@@ -10,7 +10,11 @@ import {
     NoPower,
     IndividualSettings,
     MapMeaaure,
-    Vision
+    Vision,
+    MoveSearch,
+    Music,
+    ItemManagement,
+    DataDisplay
 } from '../views'
 
 import React from 'react';
@@ -20,7 +24,10 @@ import {
     EditOutlined,
     SettingOutlined,
     SlackOutlined,
-    GlobalOutlined
+    GlobalOutlined,
+    PlayCircleOutlined,
+    AudioOutlined,
+    BulbOutlined
 } from '@ant-design/icons';
 
 export const mainRouter = [{
@@ -81,6 +88,34 @@ export const adminRouter = [{
     components: Vision,
     title: '视界',
     icon: <GlobalOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/moveSearch',
+    components: MoveSearch,
+    title: '影视大全',
+    icon: <PlayCircleOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/music',
+    components: Music,
+    title: '音乐伴娘',
+    icon: <AudioOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/itemManagement',
+    components: ItemManagement,
+    title: '物品管理',
+    icon: <BulbOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+},  {
+    pathname: '/admin/dataDisplay',
+    components: DataDisplay,
+    title: 'BizCharts',
+    icon: <BulbOutlined />,
     isNav: true,
     roles: ['001', '002', '003']
 }, {

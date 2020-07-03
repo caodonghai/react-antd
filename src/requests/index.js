@@ -52,7 +52,7 @@ export const getArticals = (pageSize = 10, pageNumber = 1) => {
 
 //文章删除
 export const deleteArticalItem = (id) => {
-    return service.post(`/api/v1/articalDelete${id}`)
+    return service.post(`/api/v1/articalDelete?id=${id}`)
 }
 
 //通过id获取文章详情
@@ -93,4 +93,9 @@ export const getSwiperOneList = () => {
 //获取作品
 export const getWorksSHowList = () => {
     return service.post('/api/v1/worksShow')
+}
+
+//获取物品列表
+export const getItemList = () => {
+    return service.post('/api/v1/itemList')
 }

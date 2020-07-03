@@ -74,6 +74,27 @@ const Vision = Loadable({
     loading: Loading
 })
 
+const MoveSearch = Loadable({
+    loader: () => import('./MoveSearch/MoveSearch'),
+    loading: Loading
+})
+
+const Music = Loadable({
+    loader: () => import('./Music/Music'),
+    loading: Loading
+})
+
+const ItemManagement = Loadable({
+    loader: () => import('./ItemManagement/ItemManagement'),
+    loading: Loading
+})
+
+const DataDisplay = Loadable({
+    loader: () => import('./DataDisplay'),
+    loading: Loading
+})
+
+
 export {
     DashBoard,
     Login,
@@ -86,5 +107,9 @@ export {
     NoPower,
     IndividualSettings,
     MapMeaaure,
-    Vision
+    Vision,
+    MoveSearch,
+    Music,
+    ItemManagement,
+    DataDisplay
 }

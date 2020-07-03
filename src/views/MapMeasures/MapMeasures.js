@@ -4,6 +4,7 @@ import AMap from 'AMap'
 import { Radio, Button } from 'antd';
 import { getMapMarker } from '../../requests'
 import { creatRandomNumber } from '../../myFunction'
+import MapClickModal from './components/MapClickModal'
 
 class MapMeasures extends Component {
     constructor() {
@@ -341,6 +342,7 @@ class MapMeasures extends Component {
             _this.setState({
                 overlays: overlay
             })
+            console.log('结束')
             // _this.setState((value) => {
             //     return {
             //         overlays: overlay
@@ -367,6 +369,10 @@ class MapMeasures extends Component {
         this.setState({
             value: ''
         })
+    }
+
+    getChildData = (data) => {
+        console.log({data})
     }
 
     render() {
@@ -401,6 +407,7 @@ class MapMeasures extends Component {
                         <Button id="close" onClick={this.closrMapMarker}>关闭绘图</Button>
                     </Button.Group>
                 </div>
+                <MapClickModal messs = {this.getChildData} />
             </div>
         )
     }
