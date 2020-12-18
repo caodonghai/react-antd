@@ -3,7 +3,7 @@ import { message } from 'antd'
 const isDev = process.env.NODE_ENV === 'development'//判断是否为生产环境
 
 const service = axios.create({
-    baseURL: isDev ? 'http://rap2.taobao.org:38080/app/mock/251246' : ''
+    baseURL: isDev ? 'http://rap2api.taobao.org/app/mock/251246' : ''
 })
 
 
@@ -29,7 +29,7 @@ service.interceptors.response.use((resp) => {
 })
 
 const serviceLogin = axios.create({
-    baseURL: isDev ? 'http://rap2.taobao.org:38080/app/mock/251246' : ''
+    baseURL: isDev ? 'http://rap2api.taobao.org/app/mock/251246' : ''
 })
 
 //响应拦截
@@ -98,4 +98,9 @@ export const getWorksSHowList = () => {
 //获取物品列表
 export const getItemList = () => {
     return service.post('/api/v1/itemList')
+}
+
+//获取词韵列表
+export const getWordcloud = () => {
+    return service.get('/api/v1/Wordcloud')
 }

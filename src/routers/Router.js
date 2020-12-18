@@ -14,7 +14,8 @@ import {
     MoveSearch,
     Music,
     ItemManagement,
-    DataDisplay
+    DataDisplay,
+    Wordcloud
 } from '../views'
 
 import React from 'react';
@@ -135,14 +136,21 @@ export const adminRouter = [{
     pathname: '/admin/messageList',
     components: MessageList,
     title: '消息列表',
-    icon: '',
+    icon: <SettingOutlined />,
     isNav: false,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/wordcloud',
+    components: Wordcloud,
+    title: '词韵',
+    icon: <SettingOutlined />,
+    isNav: true,
     roles: ['001', '002', '003']
 }, {
     pathname: '/admin/IndividualSettings',
     components: IndividualSettings,
     title: '个人设置',
     icon: '',
-    isNav: false,
+    isNav: true,
     roles: ['001', '002', '003']
 },]

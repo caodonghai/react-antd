@@ -94,6 +94,11 @@ const DataDisplay = Loadable({
     loading: Loading
 })
 
+const Wordcloud = Loadable({
+    loader: () => import('./Wordcloud/Wordcloud'),
+    loading: Loading
+})
+
 
 export {
     DashBoard,
@@ -111,5 +116,6 @@ export {
     MoveSearch,
     Music,
     ItemManagement,
-    DataDisplay
+    DataDisplay,
+    Wordcloud
 }
