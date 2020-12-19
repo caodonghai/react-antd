@@ -15,7 +15,9 @@ import {
     Music,
     ItemManagement,
     DataDisplay,
-    Wordcloud
+    Wordcloud,
+    FlyLove,
+    LoveHeart
 } from '../views'
 
 import React from 'react';
@@ -143,6 +145,20 @@ export const adminRouter = [{
     pathname: '/admin/wordcloud',
     components: Wordcloud,
     title: '词韵',
+    icon: <SettingOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/flyLove',
+    components: FlyLove,
+    title: 'LoveU',
+    icon: <SettingOutlined />,
+    isNav: true,
+    roles: ['001', '002', '003']
+}, {
+    pathname: '/admin/loveHeart',
+    components: LoveHeart,
+    title: 'LoveHeart',
     icon: <SettingOutlined />,
     isNav: true,
     roles: ['001', '002', '003']

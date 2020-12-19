@@ -1,0 +1,67 @@
+
+    @keyframes ani{
+
+        from{
+
+            transform:rotateY(0deg) rotateX(0deg);
+
+        }
+
+        to{
+
+            transform:rotateY(360deg) rotateX(360deg);
+
+        }
+
+    }
+    #heart{
+
+        position:relative;
+
+        height:100%;
+
+        width:100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center; 
+
+        animation:ani 8s linear infinite; 
+
+        transform-style:preserve-3d;
+
+    }
+
+    .line{
+
+        position:absolute;
+
+        height:200px;
+
+        width:200px;
+
+        border:2px solid red;
+
+        border-left:0;
+
+        border-bottom:0;
+
+        border-radius:50% 50% 0/50% 40% 0;
+
+    }
+
+    #word{
+
+        font-family:"隶书";
+
+        font-size:1.8em;
+
+        color: rgb(255, 255, 255);
+
+        font-weight:bold;
+
+        text-align: center
+
+    }

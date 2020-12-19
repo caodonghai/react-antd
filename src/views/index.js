@@ -99,6 +99,15 @@ const Wordcloud = Loadable({
     loading: Loading
 })
 
+const FlyLove = Loadable({
+    loader: () => import('./FlyLove/FlyLove'),
+    loading: Loading
+})
+
+const LoveHeart = Loadable({
+    loader: () => import('./LoveHeart/LoveHeart'),
+    loading: Loading
+})
 
 export {
     DashBoard,
@@ -117,5 +126,7 @@ export {
     Music,
     ItemManagement,
     DataDisplay,
-    Wordcloud
+    Wordcloud,
+    FlyLove,
+    LoveHeart
 }
